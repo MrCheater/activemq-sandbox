@@ -53,6 +53,7 @@
         </systemUsage>
         <transportConnectors>
             <transportConnector name="stomp" uri="stomp://0.0.0.0:61613"/>
+            <transportConnector name="websocket" uri="ws://0.0.0.0:61614"/>
         </transportConnectors>
         <shutdownHooks>
             <bean xmlns="http://www.springframework.org/schema/beans" class="org.apache.activemq.hooks.SpringContextHook"/>

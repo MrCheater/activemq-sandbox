@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "dependencies": {
     "bluebird": "^3.5.1",
-    "stompit": "^0.25.0"
+    "stompit": "^0.25.0",
+    "webstomp-client": "^1.2.0",
+    "express": "^4.16.3"
+  },
+  "scripts": {
+    "start": "node index.js"
   }
 }

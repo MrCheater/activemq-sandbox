@@ -8,9 +8,10 @@ docker run --name='activemq' -it --rm \
     -p 8161:8161 \
 	-p 61616:61616 \
 	-p 61613:61613 \
+	-p 61614:61614 \
 	-p 5672:5672 \
-	-v /Users/max/resolve/activemq/data:/data \
-	-v /Users/max/resolve/activemq/logs:/var/log/activemq \
+	-v ${RIGHT_HERE}/data:/data \
+	-v ${RIGHT_HERE}/logs:/var/log/activemq \
     resolve-amq
 
 rm -rf ${RIGHT_HERE}/logs/*

@@ -1,3 +1,4 @@
+const express = require('express')
 const { connect } = require('stompit');
 
 const connectOpts = {
@@ -10,7 +11,6 @@ const connectOpts = {
     'heart-beat': '5000,5000'
   }
 };
-
 
 const topic = '/topic/com.resolvejs.sample';
 
@@ -63,19 +63,30 @@ connect(connectOpts, (err, client) => {
     });
   });
 
-  let frame = client.send({
-    'destination': topic,
-    'content-type': 'application/json',
-    'eventType': 'a'
-  });
-  frame.write(JSON.stringify({ type: 'a-type' }));
-  frame.end();
+  setInterval(() => {
+      let frame = client.send({
+          'destination': topic,
+          'content-type': 'application/json',
+          'eventType': 'a'
+      });
+      frame.write(JSON.stringify({ type: 'a-type', timestamp: Date.now() }));
+      frame.end();
+    
+      frame = client.send({
+          'destination': topic,
+          'content-type': 'application/json',
+          'eventType': 'b'
+      });
+      frame.write(JSON.stringify({ type: 'b-type', timestamp: Date.now() }));
+      frame.end();
+  }, 2000)
 
-  frame = client.send({
-    'destination': topic,
-    'content-type': 'application/json',
-    'eventType': 'b'
-  });
-  frame.write(JSON.stringify({ type: 'b-type' }));
-  frame.end();
+
 });
+
+const app = express()
+
+app.use(express.static('static'));
+app.use(express.static('node_modules/webstomp-client/dist/'));
+
+app.listen(3000)

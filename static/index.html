@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/webstomp.min.js"></script>
+</head>
+<body>
+<script type="application/javascript">
+    var url = "ws://localhost:61614/stomp";
+    var client = webstomp.client(url, { debug: false });
+    client.connect('admin', 'admin', function() {
+        console.log('connect')
+        client.subscribe(
+            '/topic/com.resolvejs.sample',
+            (message) => {
+                console.log('*-sub: ' + message.body)
+                message.ack();
+            },
+            { ack: 'client-individual' }
+        )
+        client.subscribe(
+            '/topic/com.resolvejs.sample',
+            (message) => {
+                console.log('A|B-sub: ' + message.body)
+                message.ack();
+            },
+            { ack: 'client-individual', 'selector': "eventType = 'a' OR eventType = 'b'" }
+        )
+        client.subscribe(
+            '/topic/com.resolvejs.sample',
+            (message) => {
+                console.log('A-sub: ' + message.body)
+                message.ack();
+            },
+            { ack: 'client-individual',  'selector': "eventType = 'a'" }
+        )
+        client.subscribe(
+            '/topic/com.resolvejs.sample',
+            (message) => {
+                console.log('B-sub: ' + message.body)
+                message.ack();
+            },
+            { ack: 'client-individual', 'selector': "eventType = 'b'" }
+        )
+    }, function(error) {
+        console.log('Oh no :( - ' + error.message);
+    })
+</script>
+</body>
+</html>
