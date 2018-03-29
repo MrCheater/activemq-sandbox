@@ -33,6 +33,17 @@ connect(connectOpts, (err, client) => {
   client.subscribe({
     'destination': topic,
     'ack': 'client-individual',
+    'selector': "eventType = 'a' OR eventType = 'b'"
+  }, (err, message) => {
+    message.readString('utf-8', (err, body) => {
+      console.log('A|B-sub: ' + body);
+      client.ack(message);
+    });
+  });
+
+  client.subscribe({
+    'destination': topic,
+    'ack': 'client-individual',
     'selector': "eventType = 'a'"
   }, (err, message) => {
     message.readString('utf-8', (err, body) => {

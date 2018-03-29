@@ -53,7 +53,6 @@
         </systemUsage>
         <transportConnectors>
             <transportConnector name="stomp" uri="stomp://0.0.0.0:61613"/>
-            <transportConnector name="amqp" uri="amqp://0.0.0.0:5672?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600&amp;wireFormat.allowNonSaslConnections=true"/>
         </transportConnectors>
         <shutdownHooks>
             <bean xmlns="http://www.springframework.org/schema/beans" class="org.apache.activemq.hooks.SpringContextHook"/>
