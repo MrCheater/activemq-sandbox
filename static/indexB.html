@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>B-subscription</title>
+    <script type="text/javascript" src="/webstomp.min.js"></script>
+</head>
+<body>
+<script type="application/javascript">
+    var url = "wss://b-83ef68a6-7d58-4401-a156-edad4b8cd5fe-1.mq.eu-central-1.amazonaws.com:61619";
+    var client = webstomp.client(url, { debug: false });
+    client.connect('admin', 'admin', function() {
+        client.subscribe(
+            '/topic/com.resolvejs.sample',
+            (message) => {
+                console.log('B-sub: ' + message.body)
+                message.ack();
+            },
+            { ack: 'client-individual',  'selector': "eventType = 'b'" }
+        )
+    }, function(error) {
+        console.log('Oh no :( - ' + error.message);
+    })
+</script>
+</body>
+</html>
